@@ -4,7 +4,7 @@ def safe_index(lst, item, start=0):
     두번째 매개변수 item : 리스트나 튜플에서 찾을 데이터
     세번째 매개변수 start : 몇 번째 index부터 찾을지 index 수(기본값:0)
     '''
-    return lst.index(item, start) if item in lst[start:] else -1
+    return lst.index(item, start) if item in lst[start:] else '데이터가 없습니다'
 
 def safe_remove(lst, item):
     '''
