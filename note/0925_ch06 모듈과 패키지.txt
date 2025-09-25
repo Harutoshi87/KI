@@ -1,0 +1,16 @@
+6장 모듈과 패키지
+
+1절 파이썬 모듈 사용
+	(1) import A		- A모듈 가져옴
+	(2) from A import B	- A패키지 안의 B모듈 가져옴
+	    from A.B import C	- A패키지 안의 B모듈 안의 C함수
+	(3) import A as B		- A모듈을 B이름으로 가져옴
+	(4) from A import B as C	- A패키지 안의 B모듈을 C 이름으로 가져옴
+	    from A.B import C as D	- A패키지 안의 B모듈 안의 C함수를 D이름으로 가져옴
+	    from B import D as D	- B모듈 안의 C함수를 D이름(별칭)으로 가져옴
+
+2절 사용자 정의 모듈
+	함수나 클래스 등을 파이썬 파일에 저장하여 모듈을 만들고 재사용할 수 있음
+	모듈을 가져오는 순서: (1)표준모듈 (2)sys.path변수에 저장된 경로
+
+3절 패키지 : __ init__.py 포함한 모듈
