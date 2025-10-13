@@ -58,3 +58,11 @@ Numpy Package의 함수와 속성
 	dsplit(ary, indices_or_sections) : 3차원에서 세번째 축을 따라 분할
 	split(ary, indices_or_sections, axis=?)
 	array_split(ary, indices_or_sections, axis=?) : 나눠지지 않는 정수로도 split 가능
+
+- 선형대수 
+	2차원 numpy 배열은 행렬
+	행렬의 곱 : @
+	단위행렬 : np.eye(n) : n행 n열의 단위행렬이 만들어짐
+	a의 역행렬 @ a = 단위행렬
+	전치행렬 : X.T, X.transpose() x행 y열 ->> y행 x열
+	역행렬 : np.linalg.inv(X)
