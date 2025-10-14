@@ -1,0 +1,68 @@
+1. Pandas 패키지
+데이터 분석을 위해 반드시 알아야 할 패키지
+
+Numpy를 기반으로 함
+
+다른 많은 라이브러리와 잘 통합되도록 설계되어 있음
+
+2차원 구조를 갖는 데이터 프레임, 1차원 구조를 갖는 시리즈를 제공
+
+pd.DataFrame(data)
+
+Pandas의 장점 :
+
+            데이터 프레임 생성;
+            파일 입출력;
+            레이블링;
+            부분 데이터 추출;
+            크기 변경(행이나 열 삽입/삭제);
+            데이터 분할/병합;
+            데이터 구조 변경 (long format <--> wide format);
+            결측치 처리
+	헤더 없는 csv 파일을 데이터 프레임으로 읽어오는 경우 헤더 지정-> names
+	member1 = pd.read_csv('data/ch09_member1.csv', header=None, names=['Name', "Age", 'Email', 'Address'])
+	리스트를 데이터 프레임으로 할 때 헤더 지정-> columns
+	df = pd.DataFrame(l, columns=['책이름', '저자', '가격', '할인율'])
+ 
+
+2. 데이터 프레임 만들기 
+	
+	패키지에서 가져오기 : iris 데이터
+	iris 가져오는 방법1 : sklearn(머신러닝 패키지)
+	iris 가져오는 방법2 : statsmodels (R 데이터)
+	iris 가져오는 방법3 : seaborn(시각화 패키지)
+		2.4.1. iris 가져오는 방법1 : sklearn
+			- sklearn.datasets 모듈 데이터(iris)를 데이터 프레임으로 변환
+						  ex) from sklearn import datasets
+						      iris = datasets.load_iris()
+		날짜 형식 변환 필요 : pd.to_datetime(member['Birth']) / parse_dates=['Birth']
+		(전자를 자주 쓰고 후자는 결측치 있을 경우 에러 발생)
+		2.4.2. iris 가져오는 방법2 : statsmodels; ex) iris_dataset = datasets.get_rdataset('iris',
+						      package='datasets',
+                                    			      cache=True)
+		2.4.3. iris 가져오기 방법3 : seaborn; 	  ex) iris = sns.load_dataset('iris')
+
+3. 이름 (열, 행, 레벨) 지정하기 가능
+	열 : columns =[]
+	행 : index = []
+	레벨 : columns = [[],[]]
+	        columns.names = []
+	        index = [[],[]]
+	        index.names = []
+
+4. 데이터 프레임의 부분 데이터 조회 방법
+
+	df[열 이름] : 특정 열 조회
+	df[조건] : 조건에 맞는 모든 행 조회
+	df.loc[행 이름, 열 이름]
+	행 이름, 열 이름 자리에 슬라이싱, 리스트 올 수 있음
+	열 이름 생략 시 모든 열
+	행 이름 자리에 조건 올 수 있음
+	df.iloc[행 순번, 열 순번]
+	행 순번, 열 순번 자리에 슬라이싱, 리스트 올 수 있음
+	열 순번 생략 시 모든 열
+
+5. 데이터 삭제 및 추가
+	5.1.데이터 프레임의 요소 삭제
+		- df.drop(삭제할 열 이름이나 행 이름, axis)
+		- axis=0(기본값)일 때는 행 삭제, axis=1일 때는 열 삭제
