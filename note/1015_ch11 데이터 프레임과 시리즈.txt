@@ -66,3 +66,30 @@ Pandas의 장점 :
 	5.1.데이터 프레임의 요소 삭제
 		- df.drop(삭제할 열 이름이나 행 이름, axis)
 		- axis=0(기본값)일 때는 행 삭제, axis=1일 때는 열 삭제
+
+6. 데이터 프레임 병합과 연결
+	df1.merge(df2., how='right'/'left'/'inner'/'outer')
+	pd.concat([df1, df2, df3,...], axis) axis=0 (기본값) : 위 아래로 연결, axis=1 : 좌우로 연결
+
+7. 정렬
+	df.sort_index(axis) : 행 이름이나 열 이름으로 정렬
+	df.sort_values(by=[정렬 기준이 될 열 이름], ascending=True/False, inplace=True/False) : 특정 열 값에 의한 정렬
+
+8. 기초 통계 분석
+	- Pandas는 기초 통계(데이터 요약), statsmodels : 난이도 있는 통계
+	count : NaN을 제외한 데이터 수
+	min : 최소값
+	max : 최대값
+	sum : 합계
+	cumsum : 누적합
+	cumprod : 누적곱
+	mean : 평균
+	median : 중위값
+	std : 표준편차
+	var : 분산
+	quantile : 분위수(0사분위수==최소값, 1사분위수(하위 25%), 2사분위수(중위값), 3사분위수(상위 25%), 4사분위수==최대값)
+		- 이상치 구하는 용도 : Q1 - 1.5 * IQR(==Q3-Q1) ~ Q3 + 1.5 * IQR 이외의 데이터는 이상치
+	describe : 요약 통계량
+	corr : 상관 관계(계수)
+	rolling(n).mean() : n개씩 평균 출력 - 데이터 변동이 많을 때 추세(패턴)를 부드럽게 보고 싶을 때
+
