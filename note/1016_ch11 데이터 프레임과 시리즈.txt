@@ -92,4 +92,51 @@ Pandas의 장점 :
 	describe : 요약 통계량
 	corr : 상관 관계(계수)
 	rolling(n).mean() : n개씩 평균 출력 - 데이터 변동이 많을 때 추세(패턴)를 부드럽게 보고 싶을 때
+	
+	8.2.요약 통계량
+		describe() ggf. 매개변수 include/exclude
 
+9. 데이터 그룹화 및 집계
+
+	1) 그룹화 하는 방법1
+		df.groupby(by=[그룹핑할 열(들)])[[함수를 적용하여 출력할 열들]].기초 통계 함수()
+		[[함수를 적용하여 출력할 열들]] 생략 시 모든 열에 적용됨
+	   그룹화 하는 방법1-1 : 그룹핑할 때 index를 컬럼(열)로 편입
+		df.groupby(by=[그룹핑할 열(들)], as_index=False)[[함수를 적용하여 출력할 열들]].기초 통계 함수()
+		[[함수를 적용하여 출력할 열들]] 생략 시 모든 열에 적용됨
+	2) 그룹화 하는 방법2
+		df.pivot_table(index=[그룹핑할 열들],
+               	values=[함수를 적용하여 출력할 열들],
+               	aggfunc='기초통계함수')
+
+10. 데이터 구조 변경
+	wide format(시각화에 유리) <-> long format(전처리에 유리)
+	pandas 공식 문서의 melt : https://pandas.pydata.org/docs/user_guide/reshaping.html#melt-and-wide-to-long
+	Tidy Data : chrome-extension://efaidnbmnnnibpcajpcglclefindmkaj/https://vita.had.co.nz/papers/tidy-data.pdf
+
+	10.1.melt를 이용한 unpivoting (wide format -> long format)
+	10.2 pivot_table을 이용한 pivoting(long format -> wide format )
+
+11. 데이터 프레임에 함수 적용시키기
+	apply(func, axis) : 데이터 프레임이나 시리즈에 모두 적용 가능
+	applymap(func) : 각 요소별로 적용(데이터 프레임에서만 가능)
+	map(func) : 각 요소별로 적용(1차원 시리즈에서만 가능)
+
+12. 일괄 변경하기(결측치나 특정 값)
+	대부분의 결측치 :
+		0, 중위수(2분위수), 평균값, 최빈값, 이전값, 다음값, 특정값 (fillna 사용)
+		drop (dropna 사용), 그룹별 평균갑, 그룹별 중위수 (apply 사용)
+	12.1.fillna(결측치를 어떤 값으로 변경)
+	12.2.replace(to_value, new_value, inplace=T/F)
+		to_value를 new_value로 변경
+		to_value에 정규표현식을 사용 가능
+
+	12.3.mask(조건), where(조건)
+		mask(조건) : 조건이 False인 요소만 출력하고 그 외는 결측치로 출력
+		where(조건) : 조건이 True인 요소만 출력하고 그 외는 결측치로 출력
+
+	12.4.dropna
+		결측치가 있는 데이터 누락(행 기준, 열 기준)
+
+13. 시리즈
+	시리즈는 1차원 데이터 데이터 추출, 슬라이싱, 인덱싱 배열, 데이터 수정, 조건으로 추출, 데이터 추가/삭제, 정렬 및 df 변환 등 가능
