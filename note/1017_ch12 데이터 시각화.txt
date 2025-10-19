@@ -87,8 +87,8 @@ scatterplot, lineplot => relplot(subplot)
 4) 밀도 그래프
 5) 회귀 그래프
 - regplot => lmplot(subplot)
- 
-다중 그래프 FacetGrid
+6) 다중 그래프
+- FacetGrid
 
 
 
