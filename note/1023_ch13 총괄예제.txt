@@ -1,0 +1,44 @@
+결측치 개수 : isna().sum() / isnull().sum()
+결측치를 제외한 개수 : notna().sum() / notnull().sum()
+
+값에 의한 내림차순 자동 정렬 : value_counts()
+
+함수를 스칼라 데이터가 아닌 시리즈의 문자열에 적용할 경우 :
+str.____()
+ex) str.strip(), str.find(), str.contains(), str.replace(), ...
+
+apply나 map을 쓰지 않고 시리즈 데이터들의 콤마와 공백을 제거하고 그 타입을 숫자로 바꾸는 경우:
+df_last['분양가격(제곱미터)'] = pd.to_numeric(df_last['분양가격(제곱미터)'].str.strip().str.replace(',', ''))
+
+unique() : 고유 데이터
+nunique() : 고유 데이터의 개수
+
+메모리 사용량을 줄이기 위해 컬럼의 데이터 정제 및 컬럼 삭제 :
+df_last['전용면적'] = df_last['규모구분'].str.replace('전용면적', '')\
+                                       .str.replace('이하', '')\
+                                       .str. replace(' ', '')\
+                                       .str.replace('제곱미터', 'm²')\
+                                       .str.replace('초과', '~')
+
+컬럼 순서 변경 :
+# 컬럼 순서 변경
+# df_last = df_last[['지역명', '전용면적', '연도', '월', '평당분양가격']] # 원하는 순서대로 입력
+col = df_last.pop('전용면적') # 전용면적 column을 빼서 col변수에 할당
+df_last.insert(1, '전용면적', col) # 1번째 열에 col 추가
+
+데이터 구조 변경 :
+
+1. groupby시 복수의 인덱스나 함수가 적용되는 복수의 컬럼 내지는 복수의 인덱스에 중복 대괄호가 쳐진 단수의 컬럼은
+   indexing의 편의상 unstack() 필요
+2. unstack하지 않을 경우 xs(level=, key=) 필요한 경우 생김
+3. pivot_table의 경우 복수의 인덱스가 있으면 하나는 인덱스에 다른 하나는 컬럼으로 빼는 것이 좋음
+4. melt는 pivot_table한 데이터 프레임을 reset_index() 한 이후에 실행 
+
+결측치 대체 :
+fillna는 2차원으로는 적용할 수 없으므로 이런 경우 따로 함수를 만들거나 아니면 groupby한 상태에서 fillna 함수를
+lambda 식으로 transform() 함수를 사용하여 결측치를 대체
+
+디스플레이 되는 컬럼 수 조정 :
+pd.options.display.max_columns = n
+
+

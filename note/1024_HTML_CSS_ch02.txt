@@ -1,0 +1,107 @@
+0. 기본예제
+HTML
+<head><!-- 설정 정보 -->
+<title>첫 예제</title>
+<style> /* 디자인 영역(CSS) */ </style
+<link href="2.css" rel='stylesheet' type='text/css'/> /* hypertext reference : css 분리 */ 
+/* head의 주석 (css, js) */
+// head의 한 줄 주석 (css, js)
+    <script>
+	/* 동적인 부분(JavaScript); 여러 줄 주석 */
+       	// 한 줄 주석(취소를 클릭하면 'null'을 return)
+    </script>
+<script src="2.js"></script>  /* source : js 분리 */
+</head>
+<body>
+    <!-- body 부분 : 웹 문서에 출력될 정보 -->
+    안녕하세요<br> 
+    오늘부터 웹 표준            수업 시작입니다<br>
+    Hello, World!
+    <!-- 태그 이름, 속성, 속성값 -->
+    <a href="http://www.naver.com">
+       <img src="ch02_img/sulhyun.jpg" alt="설현" />
+    </a>
+</body>
+</html>
+
+
+1. 글자 관련 태그
+<body>
+    <!-- 주석(html) -->>
+    <h1 id="top">h태그는 제목 태그입니다(자동개행)</h1>
+    <h2>h2태그도 제목 태그입니다</h2>
+    <h3>h3태그도 제목 태그입니다</h3>
+    <h4>h4태그도 제목 태그입니다</h4>
+    <h5>h5태그도 제목 태그입니다</h5>
+    <h6>h6태그도 제목 태그입니다</h6>
+    <h7>h7태그는 없는 태그입니다. 없는 태그는 무시됩니다. HTML에서는 잘못된 태그 등은 에러가 발생하지 않고 무시됩니다</h7>
+    &lt;Hello, &nbsp; &nbsp; html&gt;
+    <p>
+        p태그는 단락 태그입니다. p태그가 닫히면 자동 개행되고
+        다음 단락까지 약간의 밖 여백(마진)이 생깁니다
+    </p>
+    
+    <p>KOREA<b>진하게</b></p>
+    <p>KOREA<strong>진하게</strong></p>
+    <p>KOREA<i>이태릭체(CSS로도 구현)</i></p>
+    <p>KOREA<ins>언더라인(CSS로도 구현)</ins></p> <!-- ins : inserted text -->>
+    <p><del>20,000원</del>10,000원<span><b>(50%할인)</b></span></p>
+    <p>X<sub>2(아래첨자)</sub></p>
+    <p>X<sup>2(위첨자)</sup></p>
+    <pre>
+    pre영역의 내용은 브라우저 그대로 출력
+    HTML은 글자, 목록, 표, 이미지, 오디오 / form, 공간 분할 태그
+    </pre>
+    <a href="#top">맨 위로(id가 top인 곳)</a> <!-- 우물 정자가 없으면 파일로 인식하고 DNS의 경우 http://를 무조건 써야 한다 -->
+</body>
+
+2. 목록 태그
+<body>
+    <p>순서가 있는 목록 태그(ordered list: 1, 2, 3, i, ii, iii...)</p>
+    <ol type="i"> <!-- type=1, i, I, a, A -->
+        <li>파이썬</li>
+        <li>웹 표준</li>
+        <li>웹 크롤링</li>
+    </ol>
+    <p>순서가 없는 목록 태그(unordered list)</p>
+    <ul> <!-- type=disc, circle, square -->
+        <li>파이썬</li>
+        <li>웹 표준</li>
+        <li>웹 크롤링</li> <!-- 블럭 타입 vs 인라인 타입 -->
+    </ul>
+</body>
+</html>
+
+3. 표 태그
+(1)	tr : 표 내부의 행 태그
+(2)	th : 행 내부의 열. 제목 셀 태그(제목은 진하고 가운데 정렬)
+(3)	td : 행 내부의 열. 일반 셀 태그
+
+4. 이미지 태그
+(1)	src : 이미지의 경로 지정
+(2)	alt : 이미지가 없을 때 나오는 글자 지정
+(3)	width : 이미지의 너비 지정 (css 부분에 설정해주는 경우가 더 많다)
+(4)	height : 이미지의 높이 지정 (css 부분에 설정해주는 경우가 더 많다)
+
+5. 오디오 태그
+(1)	src : 오디오 파일의 경로 지정
+(2)	preload : 오디오를 재생하기 전에 모두 불러올지 지정
+(3)	autoplay : 오디오를 자동 재생할지 지정 (인터넷 익스플로어에서 작동)
+(4)	loop : 오디오를 반복할지 지정
+(5)	conrols : 오디오 재생 도구를 출력할지 지정
+
+
+6. 비디오 태그
+(1)	src
+(2)	poster : 비디오 준비 중일 때의 이미지 파일 경로 지정
+(3)	preload : 비디오를 재생하기 전에 모두 불러올지 지정
+(4)	autoplay : 비디오를 자동 재생할지 지정
+(5)	loop : 비디오를 반복 재생할지 지정
+(6)	controls : 비디오 재생 도구를 출력할지 지정
+(7)	width : 비디오의 너비를 지정
+(8)	height : 비디오의 높이를 지정
+
+
+
+
+
