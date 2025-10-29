@@ -14,6 +14,6 @@
 8.	글자 관련된 속성들 : font-family(글꼴), font-size(크기), font-style(이텔릭체), font-weight(진하게), line-height(행간격 조정용도나 세로축에 대한 정렬 용도), 	text-align(글자에 대한 정렬), text-decoration(간단한 글꼴 모양의 속성) – 사이트 구축 시 글자 관련 속성 익히기
 9.	폰트(웹폰트,로컬폰트, 시스템폰트)
 (1)	웹 폰트: 인터넷만 연결되어 있다면, 다양한 폰트를 웹사이트 방문자에게 제공할 수 있도록 고안된 폰트가 웹폰트 입니다. 웹사이트를 방문하는 순간, 웹 폰트를 다운받아 웹사이트를 구성 합니다.  (ex) http://fonts.google.com
-(2)	로컬폰트 (무료다운: 구글이나 네이버 폰트, 그외 사이트)
+(2)	로컬폰트 (무료다운: 구글이나 네이버 폰트, 그 외 사이트)
 10.	position 속성: ①absolute 속성값 ②fixed 속성값 ③static 속성값 ④relative 속성값 ⑤relative와 absolute의 혼합 사용
 11.	float 속성: position 속성과 함께 요소의 위치를 설정하기 위한 속성
