@@ -10,6 +10,10 @@
 (2)	display: none은 공간도 사라짐
 5.	opacity 속성 : 투명도를 조절하는 속성. 여러 곳에 유용하게 사용된다
 6.	margin 및 padding 속성: margin 및 padding 속성은 아주 중요한 속성으로 정확한 속성의 의미를 알아야 함
+속성	의미	           			적용범위	                                      효과
+margin	요소 바깥 여백		요소와 다른 요소 사이		주변 요소와의 간격 조절
+padding	요소 안쪽 여백	요소의 내용(content)과 테두리(border) 사이	내용과 테두리 사이 공간 확보
+
 7.	box-sizing 속성: box-sizing속성을 이용하면 전체 사이즈의 크기를 변경할 수 있습니다
 8.	글자 관련된 속성들 : font-family(글꼴), font-size(크기), font-style(이텔릭체), font-weight(진하게), line-height(행간격 조정용도나 세로축에 대한 정렬 용도), 	text-align(글자에 대한 정렬), text-decoration(간단한 글꼴 모양의 속성) – 사이트 구축 시 글자 관련 속성 익히기
 9.	폰트(웹폰트,로컬폰트, 시스템폰트)

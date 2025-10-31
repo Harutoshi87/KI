@@ -11,7 +11,8 @@
       border-bottom: 1px solid #AAAAAA;
       text-align: justify;
     }
-    #content p:nth-child(2)::first-line,
+    #content p:nth-child(2)::first-line, /* :	의사클래스 -> 상태/조건에 따라 선택 (ex: hover, nth-child) */
+                                        /* ::	의사요소	-> 요소의 내부 특정 부분 선택 (ex: first-line, selection) */
     #content p:nth-child(3)::first-line{
       color: blue;
       font-weight:bold;
