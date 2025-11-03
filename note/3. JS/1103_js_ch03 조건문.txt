@@ -1,0 +1,50 @@
+3.1	If 조건문
+3.2	If else 조건문
+3.3	중첩 조건문
+3.4	If else if 조건문
+<script>
+    var date = new Date();
+    var hour = date.getHours();
+    if (hour < 12) {
+      alert("상쾌한 오전입니다");
+      document.write('<img src="am.jpg" alt="오전사진">');
+    } else {
+      alert("따스한 오후입니다");
+      document.write('<img src="pm.jpg" alt="저녁입니다">');
+    }
+  </script>
+3.5	switch 조건문
+	switch(비교할 값) {
+case 값: 
+	문장; break;
+case 값: 
+	문장; break;
+Default:
+	문장; break;
+}
+<script>
+    var input = Number(prompt('숫자를입력'));
+    switch (input % 2) {
+      case 0: alert('짝수'); break;
+      case 1: case -1: alert('홀수'); break;
+      default: alert('수가 아닌듯');
+    }
+  </script>
+
+※	body의 백그라운드 칼라를 일요일엔 빨간색으로, 월:오렌지, 화:노랑, 수:초록, 목:파랑, 금:남색, 토:퍼플이 되도록 자바스크립 코드를 구현하시오
+<script>
+        document.write("<h3>요일에 따른 바탕화면 변경</h3>");
+        var today = new Date();
+        var week = today.getDay();
+        switch (week) {
+            case 0: document.body.style = "background-color:#ff0000"; document.write(“즐건 일요일”);break;
+            case 1: document.bgColor = "orange"; break;
+            case 2: document.bgColor = "yellow"; break;
+            case 3: document.bgColor = "green"; break;
+            case 4: document.bgColor = "blue"; break;
+            case 5: document.bgColor = "navy"; break;
+            case 6: document.bgColor = "purple"; break;
+        }
+    </script>
+3.6	삼항연산자
+	(불 표현식)? (참일 때 실행하는 문장) : (거짓일 때 실행하는 문장);
