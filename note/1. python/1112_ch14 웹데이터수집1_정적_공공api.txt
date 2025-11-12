@@ -2,14 +2,19 @@
 # 방법1
 import requests
 url = 'http://~?'
-params = {'q':'비트코인', ';p':1}
+params = {'q':'비트코인', 'p':1}
 headers = {'user-agent':'~'}
 response = requests.get(url, [params=params], [headers=headers])
+
+response_body = response.read()
+response.json() / json.loads(response.text)
 
 # 방법2
 from urllin.request import urlopen, Request
 request = Request(url, headers=headers)
 response = urlopen(request)
+response_body = response.read()
+json.loads(response_body.decode('utf-8'))
 
 # soup 객체
 soup= BeautifulSoup(response.text (방법1) 또는 response (방법2), 'html.parser')
@@ -17,3 +22,4 @@ soup= BeautifulSoup(response.text (방법1) 또는 response (방법2), 'html.par
 # element 추출
 select('선택자') / select_one('선택자')
 find_all(태그, 속성) / find(태그, 속성)
+
