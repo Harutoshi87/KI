@@ -1,0 +1,22 @@
+1. oracle XE setup 후 cmd 창을 띄워 다음 실행
+2. 관리자 계정으로 접속한 후 계정 생성(권한 부여)
+c:\~>sqlplus system/비번 - 관리자 
+        sqlplus "/as sysdba - 최상위 권한
+SQL> create user scott identified by tiger;
+SQL> grant dba to scott;
+
+3. 관리자 계정 접속 해제
+SQL> exit;
+
+4. scott 계정으로 접속 후 수업시간에 쓸 데이터(demo.sql) 넣기
+c:\~>sqlplus scott/tiger
+SQL> select * from tab;
+SQL> @C:/KI/lecNote/04_DMBS/demo.sql;
+
+5. scott 계정으로 접속 후 데이터 확인
+c:\~>sqlplus scott/tiger
+SQL> select * from tab;
+SQL> select * from dept;
+SQL> exit;
+
+6. sqlDeveloper 다운 받아 압축 풀어 사용
