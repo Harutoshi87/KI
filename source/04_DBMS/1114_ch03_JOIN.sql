@@ -167,6 +167,7 @@ SELECT WORKER.EMPNO, WORKER.ENAME, WORKER.MGR, MANAGER.EMPNO, MANAGER.ENAME 매�
 SELECT W.ENAME, W.MGR, M.EMPNO, M.ENAME
   FROM EMP W, EMP M
   WHERE W.MGR = M.EMPNO(+);
+  -- 오라클 구문에서 (+) 는 “이 테이블을 기준에서 제외하고라도 결과를 보여줘라”라는 뜻.
   -- EX1. 'SMITH의 상사는 FORD다' - 'KING의 상사는 없다'
   SELECT W.ENAME || '의 상사는 ' || NVL(M.ENAME, '없') || '다'
     FROM EMP W, EMP M
