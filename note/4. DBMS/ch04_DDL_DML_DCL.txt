@@ -6,10 +6,43 @@ DML  :  Data Manipulation Language ; 데이터 검색, 수정 등
 		UPDATE : 기존에 존재하는 데이터베이스 객체 안의 데이터수정
 		SELECT : 데이터베이스 객체로부터 데이터를 검색
 DDL  :  Data Definition Language ; 데이터와 그 구조를 정의
-		CREATE : 데이터 베이스 객체 생성
-		DROP : 데이터 베이스 객체를 삭제
+		CREATE  TABLE 테이블명: 데이터 베이스 객체 생성
+		DROP TABLE 테이블명: 데이터 베이스 객체를 삭제
 DCL  :  Data Control Language ; 데이터베이스 사용자의 권한 제어
 GRANT : 데이터 베이스 객체에 권한 부여
 		REVOKE : 이미 부여된 데이터베이스 객체의 권한을 취소
 		COMMIT : 트랜잭션 확정 (TCL)
 		ROLLBACK : 트랜잭션 취소 (TCL)
+
+-- [IV] DDL, DCL, DML(Create Read Update Delete)
+/*
+(1) DCL (Data Control Language ; 데이터베이스 사용자의 권한 제어):
+    사용자 계정 생성 CREATE USER, GRANT(권한 부여)
+    권한 박탈       REVOKE       DROP USER(사용자 계정 삭제)
+    TRANSACTION 명령어(COMMIT, ROLLBACK)    
+(2) DDL (Data Definition Language ; 데이터와 그 구조를 정의):
+    테이블 생성 CREATE TABLE, 테이블 구조 변경 ALTER TABLE, 테이블 삭제 DROP TABLE
+(3) DML (Data Manipulation Language ; 데이터 검색, 수정 등): CRUD
+    입력 INSERT, 검색 SELECT, 수정 UPDATE, 삭제 DELETE - DML은 취소 가능 */
+
+----------------
+--- ★ DML ★ ---
+----------------
+-- 1. 
+   -- (1) INSERT INTO 테이블명 (필드명1, 필드명2, ...) VALUES (값1, 값2, ...);
+   -- (2) INSERT INTO 테이블명 VALUES  (값1, 값2, ..., 값N);
+
+-- 2. UPDATE 테이블명 SET 필드명1=값1[, 필드명2=값2, ... 필드명N=값N] [WHERE 조건];
+DROP TABLE EMP01;
+-- SUB QUERY를 이용한 테이블 생성(제약 조건은 가져오지 않고 데이터만 가져옴)
+
+-- 3. DELETE FROM 테이블명 [WHERE 조건];
+
+-- ★ ★ ★ 제약 조건
+-- (1) PRIMARY KEY : 테이블의 각 행을 유일한 값으로 식별하기 위한 필드
+-- (2) FOREIGN KEY : 테이블의 열이 다른 테이블의 열을 참조
+-- (3) NOT NULL : NULL을 포함하지 않음
+-- (4) UNIQUE : 모든 행의 값이 유일해야 하나 NULL값은 중복 허용
+-- (5) CHECK(조건) : 해당 조건이 만족(NULL값 허용)
+-- (6) DEFAULT 기본값 : 기본값 설정
+    -- (해당 열의 데이터를 입력하지 않고 INSERT하면 NULL이 들어갈 것을 DEFAULT값이 들어가도록 함)
