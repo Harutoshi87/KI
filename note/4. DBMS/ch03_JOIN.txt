@@ -1,5 +1,7 @@
 -- [III] JOIN : 2개 이상의 테이블을 연결하여 데이터를 검색하는 방법
 
+SELECT * FROM EMP WHERE ENAME='SCOTT';
+
 -- ★★★ 1. EQUI JOIN : 공통 필드값이 일치되는 조건만 JOIN
 SELECT * -- (해석하는 순서 3)
     FROM EMP E, DEPT D -- (해석하는 순서 1 : 이후 테이블의 별칭으로만 사용)
@@ -28,6 +30,7 @@ SELECT WORKER.EMPNO, WORKER.ENAME, WORKER.MGR, MANAGER.EMPNO, MANAGER.ENAME 매�
 SELECT W.ENAME, W.MGR, M.EMPNO, M.ENAME
   FROM EMP W, EMP M
   WHERE W.MGR = M.EMPNO(+);
+
 
 오라클 구문에서 (+) 는 “이 테이블을 기준에서 제외하고라도 결과를 보여줘라”라는 뜻
     
