@@ -41,6 +41,8 @@ DROP TABLE EMP01;
 -- ★ ★ ★ 제약 조건
 -- (1) PRIMARY KEY : 테이블의 각 행을 유일한 값으로 식별하기 위한 필드
 -- (2) FOREIGN KEY : 테이블의 열이 다른 테이블의 열을 참조
+	옆에 쓰기 방법 	-> 필드명 타입(size) REFERENCES 테이블명(필드명)
+	아래에 쓰기 방법 	-> FOREIGN KEY(필드명) REFERENCES 테이블명(필드명)
 -- (3) NOT NULL : NULL을 포함하지 않음
 -- (4) UNIQUE : 모든 행의 값이 유일해야 하나 NULL값은 중복 허용
 -- (5) CHECK(조건) : 해당 조건이 만족(NULL값 허용)
