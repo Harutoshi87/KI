@@ -1,5 +1,6 @@
 ※ 가상환경 만들기(ml-dl-nlp)
 
+
 (가상환경 목록 확인) conda env list 또는 (conda info --envs)
 
 (가상환경 생성) conda create -n ml-dl-nlp python=3.10
