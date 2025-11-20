@@ -1,0 +1,93 @@
+DB 연결
+(1) DB 연결 객체 생성
+(2) SQL 전송 객체 생성(cursor)
+(3) SQL 전송 & 결과 받기(cursor.execute() 이용)
+(4) cursor 해제 & DB 연결 객체 해제
+_________________________________________________________________
+SQLite
+(1) conn  = sqlite3.connect('data/ch15_example.db')
+(2) cursor = conn.cursor()
+(3) cursor.execute('''
+    CREATE TABLE MEMBER(
+        NAME TEXT,
+        AGE INT,
+        EMAIL TEXT
+    )
+''')
+    cursor.fetchall()/fetchone()/fetchmany(n)
+    conn.commit()
+(4) cursor.close()
+     conn.close()
+
+
+# 파라미터 사용하기 : qmark 방법
+name1 = input('검색할 이름1?')
+name2 = input('검색할 이름2?')
+# cursor.execute("SELECT * FROM MEMBER WHERE NAME IN ('"+name1+"', '"+name2+"')")
+# cursor.execute(f"SELECT * FROM MEMBER WHERE NAME IN ('{name1}', '{name2}')")
+cursor.execute("SELECT * FROM MEMBER WHERE NAME IN (?, ?)", (name1, name2))
+cursor.fetchall()
+
+# 파라미터 사용하기 : named 방법
+name1 = input('검색할 이름1?')
+name2 = input('검색할 이름2?')
+cursor.execute("SELECT * FROM MEMBER WHERE NAME IN (:name1, :name2)", {'name1':name1,
+                                                                       'name2':name2})
+cursor.fetchall()
+
+___________________________________________________________________________________________________________________
+
+ORACLE
+
+pip install cx_oracle (~oracle 11g)
+pip install oracledb(oracle 12c~)
+
+방법1:
+(1) conn = cx_Oracle.connect('scott', 'tiger', 'localhost:1521/xe')
+(2) cursor = conn.cursor()
+(3) sql = 'SELECT EMPNO "NO", ENAME, JOB, MGR, HIREDATE, SAL, COMM, DEPTNO FROM EMP'
+cursor.execute(sql)
+cursor.fetchall()
+(4)cursor.close()
+conn.close()
+
+방법2:
+import oracledb
+oracledb.init_oracle_client()
+(1) conn = oracledb.connect(
+    user = 'scott',
+    password = 'tiger',
+    host = 'localhost',
+    port = 1521,
+    sid = 'xe')
+(2) cursor = conn.cursor()
+(3) sql = 'SELECT EMPNO "NO", ENAME, JOB, MGR, HIREDATE, SAL, COMM, DEPTNO FROM EMP'
+cursor.execute(sql)
+emp = cursor.fetchall()
+(4) cursor.close()
+conn.close()
+_______________________________________________________________________________________________________________________
+
+MySQL
+
+%pip install PyMySQL
+
+import pymysql
+(1) conn = pymysql.connect(
+    host = "localhost",
+    user="root",
+    password="mySQL",
+    db="devdb",
+    charset="utf8mb4"
+)
+(2) cursor = conn.cursor()
+(3) sql = "SELECT * FROM PERSONAL"
+cursor.execute(sql)
+personal = cursor.fetchall()
+fieldnames = [descript[0] for descript in cursor.description]
+pd.DataFrame(personal, columns=fieldnames)
+(4) cursor.close()
+conn.close()
+
+
+
