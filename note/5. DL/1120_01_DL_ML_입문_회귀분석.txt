@@ -31,4 +31,4 @@ model.predict(np.array([[0],
 model.save('model/after_learning.h5')
 
 from tensorflow.keras.models import load_model
-
+model3 = load_model('model/noised_after_learning.h5')
