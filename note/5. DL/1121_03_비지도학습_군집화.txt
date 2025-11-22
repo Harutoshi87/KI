@@ -1,0 +1,91 @@
+비지도 학습 - 군집화
+
+1. 군집화 전체 코드(for문 이용)
+
+랜덤 포인트 2개 지정
+랜덤 포인트 2개 출력 및 시각화(x 마크)
+for문
+	랜덤 포인드 두 지점 기준으로 group0과 group1을 나눔
+	group0의 중간점과 group1의 중간점을 랜덤 포인트로 업데이트
+	랜덤 포인드 출력 및 시각화(o 마크)
+
+# 랜덤 포인트 2개 지정
+points = [
+    [random.randint(40, 85), random.randint(150, 185)],
+    [random.randint(40, 85), random.randint(150, 185)]
+]
+print('초기 기준점 :', points)
+plt.plot(points[0][0], points[0][1], 'x', c='r', markersize=20)
+plt.plot(points[1][0], points[1][1], 'x', c='b', markersize=20)
+
+# for문
+for i in range (1, 10):
+    # 랜덤 포인드(points) 두 지점 기준으로 group0과 group1을 나눔
+    group0 = []
+    group1 = []
+    for d in data:
+        if dist(points[0], d) < dist(points[1], d):
+            group0.append(d)
+        else:
+            group1.append(d)
+            
+    # group0의 중간점과 group1의 중간점을 랜덤 포인트(points)로 업데이트
+    group0_mean_X = np.mean([d[0] for d in group0])
+    group0_mean_Y = np.mean([d[1] for d in group0])
+    points[0] = [group0_mean_X, group0_mean_Y]
+    group1_mean_X = np.mean([d[0] for d in group1])
+    group1_mean_Y = np.mean([d[1] for d in group1])
+    points[1] = [group1_mean_X, group1_mean_Y]
+    
+    # 랜덤 포인드(points) 출력
+    print(i, '번째 points :', points)
+    plt.plot(points[0][0], points[0][1], 'o', c='r')
+    plt.plot(points[1][0], points[1][1], 'o', c='b')
+print('최종 기준점 :', points)
+plt.plot(points[0][0], points[0][1], '^', c='r', markersize=10)
+plt.plot(points[1][0], points[1][1], '^', c='b', markersize=10)
+plt.xlim([40, 85])
+plt.ylim([150, 185])
+
+plt.plot([d[0] for d in group0],
+         [d[1] for d in group0], 'o', c='r', alpha=0.5)
+plt.plot([d[0] for d in group1],
+         [d[1] for d in group1], 'o', c='b', alpha=0.5)
+plt.plot([d[0] for d in data[::2]],
+         [d[1] for d in data[::2]], 'x', c='g', alpha=0.5, markersize=10)
+plt.plot([d[0] for d in data[1::2]],
+         [d[1] for d in data[1::2]], '^', c='y', alpha=0.5, markersize=10)    
+plt.show()
+
+
+2. api(sklearn) 를 이용한 군집화
+sklearn : 머신러닝 패키지
+예측모델 : 지도학습(분류, 회귀), 비지도학습(군집분석) - fit(학습- 모두에게 공통), predict(예측-분류/회귀))
+변환모델 : 전처리 시 사용 ex. 스케일 조정 - fit(학습), transform(변환), fit_transform(학>변, ex. LabelEncoder)
+
+from sklearn.cluster import KMeans # class
+data = np.array(data)
+model = KMeans(n_clusters=2, # 2개 그룹으로 군집화
+              init='random', # 초기 기준점을 random하게 (besser k-means++)
+              n_init=10, # 10번 실행 (number of initializations)
+              random_state=7) # random 결과를 일관되게 맞추기 위한 seed
+model.fit(data)
+
+# 기준점(중심점)
+model.cluster_centers_
+
+#나눠진 그룹들의 인덱스
+model.labels_
+
+group0 = data[model.labels_== 0]
+group1 = data[model.labels_== 1]
+
+plt.plot([d[0] for d in group0],
+         [d[1] for d in group0], 'o', c='r', alpha=0.5)
+plt.plot([d[0] for d in group1],
+         [d[1] for d in group1], 'o', c='b', alpha=0.5)
+plt.plot([d[0] for d in data[::2]],
+         [d[1] for d in data[::2]], 'x', c='g', alpha=0.5, markersize=10)
+plt.plot([d[0] for d in data[1::2]],
+         [d[1] for d in data[1::2]], '^', c='y', alpha=0.5, markersize=10)    
+plt.show()
