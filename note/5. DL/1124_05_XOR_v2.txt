@@ -1,0 +1,169 @@
+ensorFlow **v1 스타일(=tf.compat.v1)** 을 *일부러* 배우는 목적은 아래처럼 **구체적인 기술적 이해를 얻기 위해서**이다.
+단순히 “구조 이해” 정도가 아니라, 실제로 **딥러닝의 내부 동작을 깊게 파악할 수 있는 지점들**이다.
+
+---
+
+# 🔥 TensorFlow v1 을 배우는 **구체적인 목적 7가지**
+
+## **1) 그래프(Graph) 실행 구조 이해**
+
+* TF1은 **정적 그래프(static graph)** 방식:
+
+  ```python
+  X = tf.placeholder(...)
+  W = tf.Variable(...)
+  H = X @ W
+  sess.run(H)
+  ```
+* 이 구조를 배우면 **딥러닝이 “계산 그래프” 기반으로 동작한다**는 사실을 정확히 이해한다.
+* TF2(Eager execution)는 즉시 실행이라 내부 그래프 구조를 직접 느끼기 어려움.
+
+---
+
+## **2) Session과 feed_dict 개념 이해**
+
+* TF1에서는 연산을 계산하려면 꼭
+
+  ```python
+  sess.run(H, feed_dict={X: value})
+  ```
+
+  을 사용해야 한다.
+* 이를 통해 **데이터가 그래프에 어떻게 입력되는지**,
+  **변수가 그래프 안에서 어떻게 유지되는지** 배운다.
+
+TF2에서는 자동이라 내부 흐름을 모르게 됨.
+
+---
+
+## **3) Placeholder → 입력 파이프라인 이해**
+
+* placeholder는 **딥러닝 모델의 입력을 만드는 원리**를 보여준다.
+* TF2는 Keras가 자동 처리함 → 내부 원리를 모르게 될 수 있음.
+
+---
+
+## **4) Variable 초기화 개념**
+
+* TF1에서는 반드시 직접 변수 초기화:
+
+  ```python
+  sess.run(tf.global_variables_initializer())
+  ```
+* 이 과정을 통해
+  **딥러닝 모델의 파라미터(W, b)가 어떻게 생성되고 메모리에 올라가는지** 명확히 알 수 있다.
+
+TF2에서는 자동 처리되어 감춰져 있음.
+
+---
+
+## **5) Optimizer → Gradient 계산의 원리 이해**
+
+* TF1은 optimizer 호출 시 그래프에 “gradient 노드”가 추가된다.
+* train 객체
+* 이를 보고
+  “경사하강법이 그래프에서 어떻게 구현되는지”
+  내부를 분명하게 이해할 수 있다.
+
+TF2에서는 바로 `.fit()` → 내부가 거의 감춰짐.
+
+---
+
+## **6) Layer 없이 순수 수식으로 모델을 만드는 방법 학습**
+
+* TF1에서는 모든 모델을 직접 수식으로 작성해야 함.
+* 따라서
+  **신경망 구조 자체의 원리** 를 매우 명확히 이해하게 된다.
+
+예:
+
+```python
+H = tf.matmul(X, W1) + b1
+H = tf.nn.relu(H)
+Y = tf.matmul(H, W2) + b2
+```
+
+TF2는 Dense 하나로 통째로 처리 → 내부 동작을 이해하기 어려움.
+
+---
+
+## **7) Low-level 딥러닝 프레임워크 개념 이해**
+
+TF v1을 알면 다음 기술에도 감이 빨리 온다:
+
+* PyTorch computational graph
+* JAX functional-style training loop
+* ONNX 계산 그래프 구조
+* C++로 구현된 deep learning runtime engine
+
+즉, **딥러닝 엔진이 내부적으로 어떻게 계산 그래프를 만들고 돌리는지** 완전히 이해 가능.
+
+---
+
+# 👉 결론 (한 줄 요약)
+
+**TF2는 매우 쉽지만 내부를 감춘다.**
+**TF1은 내부 원리를 모두 직접 만지기 때문에 딥러닝 구조를 깊게 이해하게 된다.**
+
+
+# 1. data 준비 & 전처리(스케일 조정, 결측치 처리 등등)
+x_data = np.array([[0, 0],
+                   [0, 1],
+                   [1, 0],
+                   [1, 1]])
+y_data = np.array([[0],
+                   [1],
+                   [1],
+                   [0]])
+
+# 2. 모델 구성
+model = Sequential()
+# model.add(Input(shape=(2,)))
+model.add(Dense(units=10, # 타겟 변수의 출력 개수
+               input_dim=2, # input_shape=(2,), # 독립변수의 입력 개수
+               activation='relu')) # 활성화 함수
+model.add(Dense(units=20, activation='relu')) # 은닉층에서는 input_shape는 NG!
+model.add(Dense(10, activation='relu'))
+model.add(Dense(1, activation='sigmoid'))
+print(model.summary())
+
+# 3. 모델 학습과정 설정
+# loss :
+    # mae(일반 회귀분석),
+    # binary_crossentropy(이진분류==logistic regression),
+    # categorical_crossentropy(다중분류 - one-hot-encoding을 한 경우)
+    # sparse_categorical_crossentropy(다중분류 - one-hot-encoding을 안 한 경우)
+model.compile(loss='binary_crossentropy', # 손실함수(loss function)
+              optimizer='adam',
+              metrics=['binary_accuracy'] # 2진분류
+             )
+
+# 4. 학습시키기
+hist = model.fit(x_data, y_data, epochs=300, verbose=2) # batch_size = x_data의 사이즈 
+
+# 5-1. 학습 과정 살펴보기
+hist.history.keys()
+
+fig, loss_ax = plt.subplots(figsize=(10,5))
+loss_ax.plot(hist.history.get('loss'), 'g', label='loss')
+acc_ax = loss_ax.twinx() # loss_ax와 x축을 공유하는 acc_ax 생성
+acc_ax.plot(hist.history.get('binary_accuracy'), 'r', label='binary_accuracy')
+loss_ax.set_xlabel('epochs')
+loss_ax.set_ylabel('loss')
+acc_ax.set_ylabel('binary_accuracy')
+loss_ax.legend(loc='center right')
+acc_ax.legend(loc='center left')
+plt.show()
+
+# 5-2. 모델 평가하기
+score = model.evaluate(x_data,y_data)
+print('loss :', score[0])
+print('accuracy', score[1])
+
+# 6. 예측하기
+model.predict(np.array([[0, 1]])) # 스케일 조정했을 경우 여기다가 반영
+
+
+
+
+그래서 교육용/연구용으로 TF1 스타일을 여전히 배우는 것.
