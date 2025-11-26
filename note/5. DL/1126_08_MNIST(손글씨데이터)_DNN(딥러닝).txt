@@ -1,0 +1,147 @@
+모델(DNN)의 accuracy 늘리기
+	- 데이터를 더 많이 확보
+	- 모델 수정(layer 추가, units 수 증가)
+	- 과적합 방지(validation data 추가, 활성화 함수 relu 계열, tanh, dropout)
+	- epochs 조정
+	- optimizer 변경
+
+(X_train, y_train), (X_test, y_test) = mnist.load_data()
+# train 데이터 6만개 => train 5만개 + val 1만개 로 분리 (실행은 딱 한 번만 실행!)
+X_val = X_train[50000:]
+y_val = y_train[50000:]
+X_train = X_train[:50000]
+y_train = y_train[:50000]
+# 입력(독립)변수
+# (n, 28, 28)
+# -> (n, 28*28 = 784) #2차원 배열로 변환하여 학습이 가능하게 만들기 
+# -> float변환
+# -> 스케일 조정(/255.0)
+train_X = X_train.reshape(50000, 28*28).astype('float32')/255.0
+val_X = X_val.reshape(10000, -1).astype('float32')/255.0
+test_X = X_test.reshape(10000, -1).astype('float32')/255.0
+train_X.shape, val_X.shape, test_X.shape
+# 분류분석(다중분류)을 위한 출력(타겟)변수의 one-hot-encoding
+# print(y_train[0])
+# to_categorical(y_train)[0]
+train_Y = to_categorical(y_train, 10)
+# 10 : Anzahl an Kategorien (안 쓰면 데이터에 맞춰 자동 입력)
+val_Y = to_categorical(y_val)
+test_Y = to_categorical(y_test)
+# 정확도가 떨어지더라도 학습(fit) 시간을 줄이기 위해 임의로 train 5만 -> 700개, val 1만 -> 300개
+# train_idx = np.random.choice(50000, 700) # 0~50000 미만의 수 700개 뽑기 (비복원 추출)
+# val_idx = np.random.choice(10000, 300)
+# train_X = train_X[train_idx]
+# train_Y = train_Y[train_idx]
+# val_X = val_X[val_idx]
+# val_Y = val_Y[val_idx]
+
+model = Sequential()
+model.add(Input(shape=(784,))) # 이미지 딥러닝에서는 (28, 28)로 넣음
+model.add(Dense(units=1024)) # 활성화 함수에 leakyrelu
+model.add(Dropout(0.3))
+model.add(Dense(units=512))
+model.add(Dropout(0.3))
+model.add(Dense(units=128))
+model.add(LeakyReLU(alpha=0.01)) # activation = 'leakyrelu' -> NG!
+# 음수 결과에 대해 1%만 통과
+model.add(Dropout(0.3))
+model.add(Dense(10, activation='softmax'))
+model.summary()
+
+model.compile(loss='categorical_crossentropy', # sparse_categorical_crossentropy(원핫인코딩 안 했을 경우)
+              optimizer='adam',
+              metrics=['accuracy']) # 평가지표
+
+hist = model.fit(train_X, train_Y, # 학습 데이터셋
+                 epochs=20,
+                 batch_size=100, # 안 써도 알아서 조정
+                 validation_data=(val_X, val_Y),
+                 verbose=0)
+
+# 모델 평가(테스트셋으로)
+loss_metrics = model.evaluate(test_X, test_Y, batch_size=100, verbose=0)
+print('loss :', loss_metrics[0]) # loss_metrics의 구조는 학습 과정 설정 단계인 compile 단계의 매개변수를 참조
+print('accuracy :', loss_metrics[1])
+# 틀린 개수
+10000 - 10000 * loss_metrics[1]
+
+# 교차표
+np.all(test_Y.argmax(axis=1) == y_test) # 실제값
+model.predict(test_X)
+model.predict(test_X).argmax(axis=1)
+y_hat = np.argmax(model.predict(test_X), axis=1) # 예측값
+pd.crosstab(y_test, y_hat, rownames=['실제값'], colnames=['예측값'])
+
+model.predict(test_X)
+model.predict(test_X)[0, model.predict(test_X).argmax(axis=1)[0]] * 100
+
+callback함수 : 
+다른 함수에 인자로 전달되어, 특정 시점(이벤트·조건·작업 완료 후)에 호출되는 함수
+callback 함수는 fit() 단계에서 매개변수 callbacks= 에 할당!
+
+callback함수 1 : log 출력
+
+# 특정 epoch마다(epchs 10 마다) log를 출력하도록 제한(Callback 사용)
+class CustomHistory(Callback): # class 조회 : anaconda prompt / vscode 
+    def __init__(self): # 생성자 함수
+        self.epoch = 0
+    def on_epoch_end(self, batch, logs={}):
+        '1epoch마다 자동 실행되는 함수'
+        self.epoch += 1
+        if self.epoch % 10 == 0:
+            print('epoch : {}, loss : {:.4f}, acc : {:.4f}, val_loss : {:.4f}, val_acc : {:.4f}'\
+                  .format(self.epoch,
+                          logs.get('loss'),
+                          logs.get('accuracy', '-'),
+                          logs.get('val_loss', '-'),
+                          logs.get('val_accuracy', '-')
+            ))
+
+customHistory = CustomHistory()
+hist = model.fit(train_X, train_Y, # 학습 데이터셋
+                 epochs=50,
+                 batch_size=100, # 안 써도 알아서 조정
+                 validation_data=(val_X, val_Y),
+                 verbose=0,
+                 callbacks=[customHistory]
+                )
+
+callback함수 2 : EarlyStopping¶
+val_loss 값이 늘어나면 지정한 epoch를 다 수행하지 않고 조기 종료
+val_accuracy 값이 줄어들면 지정한 epoch를 다 수행하지 않고 조기 종료
+
+# monitor 시준으로 patience번 이상 안 좋은 데이터가 나오면 조기 종료
+early_stopping = EarlyStopping(monitor='val_accuracy', patience=2) # 대부분 patience=20~30
+
+hist = model.fit(train_X, train_Y, # 학습 데이터셋
+                 epochs=50
+                 batch_size=100, # 안 써도 알아서 조정
+                 validation_data=(val_X, val_Y),
+                 verbose=1,
+                 callbacks=[early_stopping] # callback function
+                )
+
+callback함수 3 : ModelCheckpoint
+epoch마다 val_accuracy(val_loss, accuracy, loss)값이 좋을 때 모델을 자동 저장하는 callback함수
+
+# 모델 자동 저장하는 callback function
+import os 
+model_save_folder = './model08/' # .은 현재 폴더, ..은 바로 전 폴더
+if not os.path.exists(model_save_folder): # 폴더가 없으면 폴더 생성
+    os.mkdir(model_save_folder) # operating system에 있어서 make directory (디렉토리 생성)
+file = model_save_folder + 'mnist-{epoch:03d}-val{val_accuracy:.4f}.h5' # class에서 정의된 형식으로 입력
+modelckpt = ModelCheckpoint(
+                filepath = file,
+                monitor = 'val_accuracy', # 모니터할 지표(기본값 : val_loss)
+                save_best_only=True, # 모니터링 지표가 개선된 경우만 저장
+                mode = 'max', # 값이 클수록 저장
+                verbose=1
+)
+
+hist = model.fit(train_X, train_Y, # 학습 데이터셋
+                 epochs=200,
+                 batch_size=100, # 안 써도 알아서 조정
+                 validation_data=(val_X, val_Y),
+                 verbose=1,
+                 callbacks=[modelckpt] # callback function
+                )
