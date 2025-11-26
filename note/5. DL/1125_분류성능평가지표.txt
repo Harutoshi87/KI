@@ -12,6 +12,7 @@ recall(재현율=민감도) = TP / 실제값이 1인 수(FN+TP) -> 실제 Positi
 	(실제값기준)
 F1 score = recall과 precision의 조화평균
 	    F1 score =2* (precision*recall)/(precision+recall)
+	*  F1 score는 평가 단계에서 활용
 
 트레이드 오프 관계
 Precision을 높이려면 -> 1일 확률이 높은 것만 Positive로 예측함 -> recall이 낮아질 수 있음
