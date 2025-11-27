@@ -1,0 +1,21 @@
+데이터 셋 생성(seaborn) & 전처리 X, y(setosa,versicolor,virginica라벨인코딩-원핫코딩)분리 -> train과 test셋 분리(8:2)
+모델 구성(입력4 -> 출력3, layer5: 4->64->128->50->30->3)
+모델 학습과정 설정
+모델 학습(Earlystopping, ModelCheckpoint추가)
+모델평가(시각화, 현재모델과 저장된 최고의 모델 평가, 교차표==혼동행렬)
+모델사용/저장
+
+라벨인코딩O,  원핫인코딩X -> loss function : sparse_categorical_crossentropy
+
+라벨인코딩O,  원핫인코딩O -> loss function : categorical_crossentropy
+
+라벨인코딩O,  원핫인코딩X -> # Recall(), Precision()을 하려면 무조건 원핫인코딩으로 2차원으로 넣어야 함!
+
+라벨인코딩O,  원핫인코딩X -> fit()에 학습 데이터셋 타겟변수는 1차원!
+
+교차표 (데이터 프레임) : 예측값 실제값의 수가 많을 때 
+혼동행렬 (배열) : 예측값 실제값의 수가 적을 때
+
+※ 회귀분석 -> loss function : mse, rmse, mae
+※ 이진분류 -> loss function : binary_crossentropy
+※ 다중분류 -> loss function : categorical_crossentropy

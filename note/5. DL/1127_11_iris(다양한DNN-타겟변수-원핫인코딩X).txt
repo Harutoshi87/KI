@@ -1,0 +1,80 @@
+다양한 DNN
+
+1. 기본적인 DNN
+2. sklearn 이용 : 원핫인코딩을 하지 않고 라벨인코딩까지만 해야 작동
+	from sklearn.neural_network import MLPClassifier # 다층 퍼셉트론 분류기
+	model = MLPClassifier(
+            hidden_layer_sizes=(68, 128, 50), # 은닉층의 units 개수
+            activation='relu',
+            solver='adam', # SGD등의 optimizer
+            batch_size=40,
+            max_iter=1000, # 학습 최대 횟수
+            early_stopping=True, # 조기 종료 활성화 여부
+            n_iter_no_change=10, # EarlyStopping의 patience와 유사
+            validation_fraction=0.1, # = validation_split() : 검증셋 비율
+            warm_start=False # True일 경우 이전 학습에 이어서 학습(W와 b값 이전 학습 결과치부터
+)
+	# 학습 model.fit(train_X, train_y)
+
+3. 클래스를 생성하여 모델 생성함수 사용
+
+✅ staticmethod의 목적
+
+논리적으로 클래스와 연관된 함수
+독립적인 기능(함수) 를 클래스 안에 묶고 싶을 때
+그냥 함수인데 이 클래스 소속임을 명확히 하고 싶을 때
+
+	class DNNClassifier:
+    @staticmethod
+    # 모델 설정
+    def build(input_dim=4, activation='relu', output_dim=3):
+        model = Sequential([
+            Input(input_dim),
+            Dense(units=50, activation=activation),
+            Dense(30, activation=activation),
+            Dense(units=output_dim, activation='softmax')
+        ])
+    # 학습 설정
+        model.compile(loss='sparse_categorical_crossentropy',
+                      optimizer='adam',
+                      metrics=['accuracy'])
+        return model
+
+4. 함수형 API : 병렬처리, Residual block
+
+# 병렬처리 방식
+from tensorflow.keras.layers import concatenate
+input_ = Input(shape=(4))
+dense1 = Dense(units=50, activation='relu')(input_)
+dense2 = Dense(80, activation='relu')(input_)
+dense3 = Dense(30, activation='relu')(input_)
+x = concatenate((dense1, dense2, dense3))
+output = Dense(3, activation='softmax')(x)
+model = Model(inputs=input_, outputs=output)
+model.summary() # 4*50+50 + 4*80+80 + 4*30+30 + 160*3+3 = 1283
+
+# 기존 model1
+model = Sequential()
+model.add(Input(shape=(4,)))
+model.add(Dense(units=50, activation='relu'))
+model.add(Dense(units=30, activation='relu'))
+model.add(Dense(units=3, activation='softmax'))
+
+# 기존 model2
+model = Sequential([
+            Input(shape=(4,)),
+            Dense(units=50, activation='relu'),
+            Dense(30, activation='relu'),
+            Dense(units=3, activation='softmax')
+        ])
+model.summary()
+
+# 기존 model3 (함수형 API 스타일)
+from tensorflow.keras import Model
+input_ = Input(shape=(4,))
+layer1 = Dense(units=50, activation='relu')(input_)
+layer2 = Dense(30, activation='relu')(layer1)
+output = Dense(units=3, activation='softmax')(layer2)
+model = Model(inputs=input_, outputs=output)
+model.summary()
+

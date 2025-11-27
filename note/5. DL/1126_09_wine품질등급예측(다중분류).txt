@@ -1,0 +1,11 @@
+red wine 품질 등급 예측
+1. 데이터셋 확보 & 전처리
+    독립변수와 타겟변수 분리 :
+    -> 독립변수만 스케일 조정(StandardScaler) 
+    -> 타겟변수 one-hot-encoding(get_dummies) 
+    -> 훈련셋과 테스트셋 분리(train_test_split)
+2. 모델 구성(입력(독립)변수 11, 출력(종속)변수 ? -> one-hot-encoding 필요
+3. 모델 학습 과정 설정(다중분류로 설정) -> 출력층의 활성화함수 : softmax
+4. 모델 학습(callbacks 이용)
+5. 모델 평가 - 그래프, 평가(테스트셋), 교차표/혼동행렬
+6. 모델 저장 및 사용
