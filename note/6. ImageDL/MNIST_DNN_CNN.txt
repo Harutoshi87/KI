@@ -1,0 +1,22 @@
+CNN
+컨볼루션 layer -> pooling -> 컨볼루션 layer -> pooling -> Flatten -> DNN
+
+width=28; height=28
+model = Sequential([
+        Conv2D(filters=32,    # 필터수
+               kernel_size=3, # 필터 사이즈 3x3
+               padding='same', # zero-padding / padding='valid'기본값
+               input_shape = (width, height, 1), # # Conv2D는 3차원 입력받음 : w, h, 1:흑백/3:컬러
+               activation='relu'
+        ), # 28*28 1채녈이미지를 32개 필터로 특성맵 추출=> 28*28*32특성맵
+        MaxPool2D(pool_size=(2,2)), # 가로2배, 세로2배 전체 4배 줄어듦
+        Dropout(0.1),
+        Conv2D(filters=64, kernel_size=(3,3), activation='relu'),
+        MaxPool2D(pool_size=(2,2)),
+        Dropout(0.25),
+        Flatten(), # 2304
+        Dense(units=128, activation='relu'),
+        Dropout(0.4),
+        Dense(units=10, activation='softmax')
+])
+model.summary()
