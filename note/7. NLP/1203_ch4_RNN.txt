@@ -1,0 +1,7 @@
+ch4_RNN(RecurrentNeuralNetwork;순환신경망)
+데이터의 순서가 중요하거나, 시계열 데이터일 경우
+활용분야 : 번역, 음성인식, 주가예측, 농수산물가격예측
+
+SimpleRNN의 파라미터 계산 
+#(input_dim(Embedding의 output_dim) + units) * units + bias(unit당 1개씩)
+# 두번째 layer의 파라미터 1376 = (10+32)*32 + 32(bias)

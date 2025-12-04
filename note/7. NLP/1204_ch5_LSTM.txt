@@ -1,0 +1,32 @@
+ch5_LSTM(RNN, GRU)으로 영화평 구분하기
+imdb사이트의 5만개 영화 감상평 : Train/test - 타겟변수:부정/긍정
+
+
+하이퍼파라미터 설정
+- 하이퍼파라이터를 바꾸면 모델의 정확도나 속도에 차이남
+
+imdb
+# 1: 리뷰의 시작을 알리는 숫자
+# 2: MY_WORDS(20000) 이내에 들어가지 않는 단어(OOV; out-of-vocabulary)
+# 3: padding 처리
+
+LSTM의 파라미터 계산
+# LSTM 입력 데이터 구조 :
+              # LSTM은 시퀀스 데이터를 처리하기 때문에, 입력 데이터는 3차원 배열이어야 함
+              # Input shape = (batch size, timesteps, features)
+                        # batch size : 한 번에 처리하는 샘플 개수 → None으로 자동 설정(기본값)
+                        # timesteps : 시퀀스 길이, 즉 단어 수 → 여기서는 MY_LENGTH = 80
+                        # features : 각 timestep의 입력 벡터 차원 → Embedding 결과 차원 MY_EMBED = 32
+               
+              # kernel_initializer='he_normal' , #입력 가중치(input_dim) 초기화 (LSTM에서는 불요)
+              # recurrent_initializer= 'orthogonal' # 순환 가중치(recurrent 가중치) 초기화 (LSTM에서는 불요)
+              ))
+# Params = 4×units×(input_dim(== Embedding의 output_dim) + units + 1(bias))
+# => LSTM params = 4 게이트 × units × (input_dim + units + 1(bias per unit))
+# ★ LSTM params= 4 gates × params_per_gate=4×(Embedding의 output_dim(input_dim)×units(==>현재 입력 x_t 연결 가중치)
+#                + units×units(==>이전 hidden h_{t-1} 연결 가중치) + units(bias per unit)) ★
+# Params 24832 = 4(LSTM은 4개의 게이트로 구성됨: 입력 게이트 (input gate),
+                                                             # 망각 게이트 (forget gate)
+                                                             # 출력 게이트 (output gate)
+                                                             # 셀 후보 (cell candidate))
+               # × units(= MY_HIDDEN : 64) × (input_dim(Embedding의 output_dim)(32) + units(64) + 1(bias))
