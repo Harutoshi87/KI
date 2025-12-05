@@ -1,0 +1,12 @@
+ch9_시계열 데이터 분석 및 예측¶
+pip install statsmodels==0.13.5 # 주기적인 시계열 데이터의 트렌드 추이 (예측은 불가)
+pip install prophet # facebook에서 개발한 시계열 예측 lib
+
+statsmodels
+- 결측치가 없는 데이터에서(결측치 있으면 에러 발생) 주기적인 데이터의 트렌드 추이(예측은 불가)
+- 날자형 인덱스와 데이터 컬럼 필요
+
+Prophet
+- facebook이 만든 것
+- 계절성, 추세, 휴일 효과(주말 효과) 등을 자동으로 모델, 예측
+- ds(시간), y(숫자) column

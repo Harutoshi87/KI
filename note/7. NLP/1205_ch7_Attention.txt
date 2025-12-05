@@ -1,0 +1,30 @@
+# 인코더 LSTM 구현 (Transformer 교안 26~27쪽 그림 참조)
+ENC_IN = Input(shape=(4, alpha_total_size))
+# 윗출력, state_c, state_h
+ENC_OUT, state_h, state_c = LSTM( # hat과 control수도꼭지
+                    units=MY_HIDDEN,
+                    return_sequences=True, # 윗출력 받음
+                    return_state=True, 
+            )(ENC_IN)
+# 인코더와 디코더를 연결할 link
+link = [state_h, state_c]
+# 디코더 구현 : return_sequences=True 위로 올리는 출력값 사용
+DEC_IN = Input(shape=(3, alpha_total_size))
+DEC_MID, state_h1, state_c1 = LSTM(units=MY_HIDDEN,
+              return_state=True, 
+              return_sequences=True)(DEC_IN,
+                                    initial_state=link)
+# Attention mechanism
+CONTEXT_VECTOR = Attention()([DEC_MID, ENC_OUT]) # 27쪽의 1~3단계
+
+# CONTEXT_VECTOR와 디코더 LSTM 출력을 결합
+CONTEXT_AND_LSTM_OUT = Concatenate()([CONTEXT_VECTOR, DEC_MID])
+
+# 최종 출력층
+FINAL_OUT = Dense(units=alpha_total_size,
+               activation='softmax')(CONTEXT_AND_LSTM_OUT)
+
+# 모델
+model = Model(inputs=[ENC_IN, DEC_IN],
+             outputs=FINAL_OUT)
+model.summary()

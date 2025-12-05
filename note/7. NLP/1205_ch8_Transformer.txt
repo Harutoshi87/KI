@@ -1,0 +1,42 @@
+# Transformer 교안 31쪽, 41쪽 그림 참조
+from tensorflow import range
+from tensorflow.keras.layers import Input, Dropout, MultiHeadAttention, add
+from tensorflow.keras.layers import BatchNormalization, GlobalAvgPool1D, Dense
+from tensorflow.keras.models import Model, Sequential
+
+# 입력층, 임베딩층
+INPUTS = Input(shape=(MY_LENGTH, ))
+INPUT_EMBEDDING = Embedding(input_dim=MY_WORDS,
+                           output_dim=MY_EMBED)(INPUTS)
+
+# Positional Encoding
+POSITIONS = range(start=0,
+                 limit=MY_LENGTH)
+POS_ENCODING = Embedding(input_dim=MY_WORDS,
+                        output_dim=MY_EMBED)(POSITIONS)
+POS_ENC_OUTPUT = POS_ENCODING + INPUT_EMBEDDING
+
+# Multi-Head Attention
+ATTENTION_OUTPUT = MultiHeadAttention(num_heads=3,
+                                     key_dim=MY_EMBED)(POS_ENC_OUTPUT, POS_ENC_OUTPUT)
+X = add([POS_ENC_OUTPUT, ATTENTION_OUTPUT])
+X = BatchNormalization()(X)
+
+# Feed Forward Network
+FFN = Sequential([
+    Dense(MY_HIDDEN, activation='relu'),
+    Dense(MY_EMBED, activation='relu')
+])(X)
+X = add([FFN, X])
+X = BatchNormalization()(X)
+
+# 하나의 Vector로 하여 Dense에 보냄
+X = GlobalAvgPool1D()(X)
+X = Dropout(0.1)(X)
+
+X = Dense(MY_HIDDEN, activation='relu')(X)
+X = Dropout(0.1)(X)
+OUTPUTS = Dense(units=2, # 부정그룹/긍정그룹 (다중분류방식) 
+               activation='softmax')(X)
+model = Model(inputs = INPUTS,
+             outputs=OUTPUTS)
