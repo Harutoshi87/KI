@@ -6,7 +6,33 @@ statsmodels
 - 결측치가 없는 데이터에서(결측치 있으면 에러 발생) 주기적인 데이터의 트렌드 추이(예측은 불가)
 - 날자형 인덱스와 데이터 컬럼 필요
 
+# 시계열 데이터의 구조를 분해하는 도구 : 실제값 추세, 계절성, 잔차(실제 관측값에서 모델(예측값)이 설명하지 못한 차이)를 분석
+from statsmodels.tsa.seasonal import seasonal_decompose
+result = seasonal_decompose(ts['미세먼지농도'],
+                            period=30) # 30일 단위로 계절성을 나누어서 분석
+# result.observed : 실제 데이터
+# result.trend # 데이터의 장기적인 변화, 전반적으로 감소, 증가
+# result.seasonal # 주기적인 계절성 패턴
+# result.resid # 잔차(실제값에서 추세와 계절성을 뺀 노이즈)
+
+
 Prophet
 - facebook이 만든 것
 - 계절성, 추세, 휴일 효과(주말 효과) 등을 자동으로 모델, 예측
 - ds(시간), y(숫자) column
+
+from prophet import Prophet
+# 1. 모델 생성
+p_model = Prophet()
+# 2. 학습
+p_model.fit(df_flt2)
+# 3. 30일 이후의 데이터를 예측하는 미래 df를 생성
+future = p_model.make_future_dataframe(periods=30)
+# 4. 예측 수행
+forecast = p_model.predict(future)
+forecast.tail(30)
+
+p = p_model.plot(forecast) # 변수에 할당하지 않으면 그래프가 2번 그려짐
+
+# 트렌드와 휴일 효과까지 다 시각화
+p1 = p_model.plot_components(forecast)
