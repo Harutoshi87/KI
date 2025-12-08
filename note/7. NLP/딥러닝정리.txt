@@ -18,10 +18,10 @@
 	precision(정밀도) = TP / 예측을 1이라고 한 수(FP+TP) -> 예측한 Positive 중 실제 Positive 비율 (예측값기준)
 	recall(재현율=민감도) = TP / 실제값이 1인 수(FN+TP) -> 실제 Positive 중에서 모델이 맞게 예측한 비율 (실제값기준)
 	F1 score = recall과 precision의 조화평균
-	 - F1 score =2* (precision*recall)/(precision+recall)
-	 *  F1 score는 평가 단계에서 활용
+	 * F1 score =2* (precision*recall)/(precision+recall)
+	 * F1 score는 평가 단계에서 활용
 
-트레이드 오프 관계
+trade-off 관계
 Precision을 높이려면 -> 1일 확률이 높은 것만 Positive로 예측함 -> recall이 낮아질 수 있음
 recall을 높이려면 -> 조금이라도 가능성이 있으면 Positive로 예측-> precision이 낮아질 수 있음
 
@@ -29,7 +29,7 @@ recall을 높이려면 -> 조금이라도 가능성이 있으면 Positive로 예
 	데이터 확보, 모델 수정(레이어 추가, units 수 증가), epoch 조정, optimizer 변경
 
      - 과적합 방지를 위한 방법
-	dropout, 과적합 방지 (validation data U/O train data 추가, 균형 잡히지 않은 data 증강, 활성화 함수 relu 계열, tanh)
+	dropout, 과적합 방지 (validation data &/ train data 추가, 균형 잡히지 않은 data 증강, 활성화 함수 relu 계열, tanh)
 
      - 모델 저장(확장자 : h5, keras)
 	model.save('파일명') / load_model('파일명')
