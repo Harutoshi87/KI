@@ -1,0 +1,77 @@
+※ 가상환경 만들기(ml-dl-nlp)
+
+
+(가상환경 목록 확인) conda env list 또는 (conda info --envs)
+
+(가상환경 생성) conda create -n ml-dl-nlp python=3.10
+
+(생성된 가상환경으로 들어가기) conda activate ml-dl-nlp
+
+(가상환경 나오기) conda deactivate
+
+(가상환경 지우기) conda env remove --name 가상환경이름
+
+
+(pip를 최신버전으로 업그레이드) python -m pip install --upgrade pip
+
+(lib들 설치) pip install jupyter numpy==1.23.5 pandas==1.5.3 matplotlib==3.7.0 seaborn==0.12.2 scikit-learn==1.2.1
+
+(tensorflow 설치) pip install tensorflow==2.10.0
+
+(가상환경에 들어가서 jupyter 설치) conda install ipykernel
+
+(Jupyter에서 선택가능한 커널로 등록) python -m ipykernel install --user --name ml-dl-nlp --display-name "ml-dl-nlp(ipykernel)"
+
+(Jupyter 커널 목록 확인) jupyter kernelspec list
+
+(Jupter 커널 목록에서 삭제) jupyter kernelspec remove display이름
+
+(Jupyter lab 실행) Jupyter lab –notebook-dir=d:\ai\source\05_deepLearning
+
+
+※ 딥러닝에서 엑셀데이터 불러오기
+pip install openpyxl==3.1.5
+
+※ mnist에서 (사진을 numpy배열로 읽어오기 위해)
+pip install opencv-python==4.8.1.78
+
+※ 자연어처리에 설치한 것
+pip install nltk==3.7 # 영어권 자연어처리
+pip install konlpy==0.6.0
+pip show python-mecab-ko #1.3.7
+pip install wordcloud==1.9.4
+pip install gensim==4.4.0 (워드임베딩=단어간거리계산)
+
+pip install apyori==1.1.2
+pip install python-dotenv # .env읽어들이기(강추)
+pip install python-decouple # .env읽어들이기
+
+pip install statsmodels==0.13.5 # 주기적인 시계열 데이터의 트렌드 추이 (예측은 불가)
+pip install prophet==1.2.1 # facebook에서 개발한 시계열 예측 lib
+
+※ HuggingFace
+
+pip install torch==2.6.0 torchvision==0.21.0 --index-url https://download.pytorch.org/whl/cpu : CPU
+
+pip install torch==2.6.0 torchvision==0.21.0 --index-url : GPU 
+
+pip install sympy==1.13.1 fsspec # 2025.9.0
+pip install transformers # 4.57.3 HuggingFace Model 사용
+pip install sentencepiece # Tokenizer 기능(구글 作)
+pip install hf_xet # 대용량 HuggingFace 파일 업로드/다운로드
+pip install sacremoses # 한영 번역의 경고를 막고 번역  품질을 높이지 위함
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
