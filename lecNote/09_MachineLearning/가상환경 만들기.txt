@@ -62,6 +62,9 @@ pip install hf_xet # 대용량 HuggingFace 파일 업로드/다운로드
 pip install sacremoses # 한영 번역의 경고를 막고 번역  품질을 높이지 위함
 
 
+※ ML 수업
+
+pip install dataprep # EDA를 쉽게(0.4.5)
 
 
 
