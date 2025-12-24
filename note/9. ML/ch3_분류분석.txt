@@ -1,0 +1,58 @@
+1절. 분류분석 개요
+1-1 분류분석이란?
+* 타겟변수가 categorical 변수인 분석
+    - 수업ex. mnist 숫자예측, iris 분류예측, 와인등급예측, 질병예측
+    - ex. 고객등급예측, 휴면고객예측, 상품구매예측, 보험사기예측...
+* sklearn 패키지 : 예제데이터셋, 전처리, 머신러닝 모형
+1-2 샘플용 데이터 셋 접근
+load 계열(패키지 내에 데이터 있음)
+- load_iris(), load_boston(), load_diabets(), ...
+fetch 계열(패키지 내에 데이터가 없고, 인터넷 연결시 다운)
+- fetch_openml(), fetch_rov1(로이터 뉴스 말뭉치)
+make 계열(가상의 데이터 생성)
+- make_classification() : 분류분석용 데이터 생성
+- make_regression() : 회귀분석용 데이터 생성
+- make_blobs() : 군집분석용 데이터 생성(타겟변수x)
+
+2절. 분류모형의 종류
+predict()
+2-1 확률적 모형
+- 주어진 데이터에 각 클래스가 정답일 확률을 계산하는 모형
+- predict_proba() : 각 분류 클래스별 확률을 알려줌(일부 판별함수 모형에 있기는 함)
+- predict_log_proba() : 확률의 로그값을 알려줌
+1) 확률적 생성 모형
+- 각 클래스별 특징 데이터 확률분포 추정하는 방식. 소량의 데이터로도 작동
+- ex. QuadraticDiscriminantAnalysis, MultinomialNB
+2) 확률적 판별 모형
+- 확률을 계산하는 함수 이용
+- ex. 의사결정나무, 로지스틱 회귀
+2-2 판별함수 모형
+- 주어진 데이터를 클래스에 따라 다른 영역으로 나누는 경계면을 찾은 후, 
+- 이 경계면을 계산 식 => 판별함수
+- decision_function()
+- ex 퍼셉트론, SVM, MLP(신경망)
+=> RandomForest, LGBM, XGBoost, CatBoost 등의 앙상블 모형이 더 많이 쓰임
+
+3절. 모형1;확률적 생성 모형
+베이즈 정리를 사용하여 확률분포 계산
+
+4절. 모형2 ; 확률적 판별모형
+
+5절. 모형3 ; 판별함수 모형¶
+동일한 클래스가 모여 있는 영역과 그 영역을 나누는 경계면을 정의
+MLP제외 decision_function() 제공
+Perceptron, SVC, 인공신경망 모형(SVC와 같이 일부는 predict_proba도 있음)
+
+6절. 분류모형의 성능평가
+sklearn 모형의 평가방법
+metrics 모듈 : accuracy, precision, recall, f1 score, ...
+6-1 혼동행렬 이용
+6-2 ROC커브를 이용한 성능 비교
+위양성률(FPrate)과 재현율(TPrate)의 변화를 시각화한 것 = 모델이 양성을 잘 맞추는 능력(TPrate)과 잘못 예측하는 비율(FPrate)를 비교하는 곡선
+세로축(재현율) -> 높은 게 좋음
+가로축(위양성률) -> 낮은 게 좋음
+6-3 두 모형의 혼동행렬이 같은 경우
+roc_curve로도 우열을 가리기 힘든 경우 : auc
+auc = 1 : 완벽한모델
+auc = 0.5 : 무작위 모델
+auc < 0.5 : 오히려 반대로 예측하는 경향이 있는 최악의 모델

@@ -1,0 +1,34 @@
+1. 군집모델(클러스터링)
+클러스터(cluster) : 독립변수의 특성이 유사한 데이터의 그룹
+클러스터링(clustering) : 주어진 데이터를 여러 개의 클러스터로 구분하는 것
+중심 기반 클러스터링(K-Means) : https://commons.wikimedia.org/wiki/File:KMeans-Gaussian-data.svg
+연결기반 클러스터링(DBSCAN) : https://commons.wikimedia.org/wiki/File:DBSCAN-density-data.svg
+밀도기반 클러스터링(DBSCAN의 변형으로 OPTICS) : https://commons.wikimedia.org/wiki/File:OPTICS-Gaussian-data.svg
+
+2. K-Means 클러스터링
+가장 단순하고 빠른 클러스터링 알고리즘
+중심점을 찾아가는 알고리즘
+세부 알고리즘은 교안 6쪽 및 DL 군집분석 소스 참조
+K-Means 클러스터링의 한계점(13쪽)
+군의 특성이 다를 경우
+
+군의 크기가 다른 경우
+군의 밀도가 다른 경우
+군이 구형이 아닐 경우==군이 비구형일 경우
+이상치를 포함할 경우 : 이상치를 조정하거나 삭제한 후 클러스터링
+
+3. Hierarchical 클러스터링(계층적 군집분석)
+계층적 분석(linkage) -> dendrogram -> fcluster를 이용하여 클러스터를 생성
+
+최종적으로 하나의 군집이 될 때까지 군을 묶는 클러스터링 알고리즘
+군집의 수를 미리 정해주지 않아도 됨
+Dendrogram을 이용하여 다양한 군집 수 시각화
+
+4. DBSCAN 클러스터링
+연결 기반(밀도 기반) 군집화 알고리즘. 이상치를 자동 감지
+단점 : 클러스터의 밀도가 일정하지 않으면 성능이 낮아짐
+
+5. 군집모형의 성능평가
+score함수를 통해 예측 모형 평가(분류, 회귀, 군집에서는 안 씀)
+metrics 모듈 함수를 통해 군집 모형 평가(클러스터 소속과 개수를 모두 알고 있을 때)
+실루엣 계수(클러스터 소속과 개수를 모를 때 사용)

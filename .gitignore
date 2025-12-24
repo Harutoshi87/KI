@@ -3,3 +3,5 @@ IDE/
 downloads/
 .ipynb_checkpoints/
 .env
+.venv/
+.idea/
