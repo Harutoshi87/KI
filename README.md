@@ -18,7 +18,7 @@
 <details>
 <summary><H2>📋 CURRICULUM click!</h2></summary>
 <br>
-<img width="673" height="880" alt="Image" src="https://github.com/user-attachments/assets/ffb7bea7-2236-4069-92d6-bf1af8b1a43a" />
+<img width="673" height="880" alt="Image" src="https://github.com/user-attachments/assets/f8536f3d-1905-4456-b90f-78f0591199ac" />
 </details>
 
 ##  📚 SKILLS
@@ -108,16 +108,8 @@
 	
 ## 📊 GitHub Activity
 
-![Followers](https://img.shields.io/github/followers/yisy0?style=social)
-![Stars](https://img.shields.io/github/stars/yisy0?style=social)
-![Profile Views](https://komarev.com/ghpvc/?username=yisy0&color=blueviolet&style=flat-square&label=Profile+Views)
-![Repos](https://img.shields.io/badge/dynamic/json?color=blue&label=Repositories&query=public_repos&url=https://api.github.com/users/yisy0)
-![Commits](https://img.shields.io/github/commit-activity/m/yisy0/ai)
-
----
-
-<div align="center">
-
-**⚠️ 본 레파지토리는 교육과정 종료 후(2026.02.12) 삭제될 수 있습니다 ⚠️**
-
-</div>
+![Followers](https://img.shields.io/github/followers/Harutoshi87?style=social)
+![Stars](https://img.shields.io/github/stars/Harutoshi87?style=social)
+![Profile Views](https://komarev.com/ghpvc/?username=Harutoshi87&color=blueviolet&style=flat-square&label=Profile+Views)
+![Repos](https://img.shields.io/badge/dynamic/json?color=blue&label=Repositories&query=public_repos&url=https://api.github.com/users/Harutoshi87)
+![Commits](https://img.shields.io/github/commit-activity/m/Harutoshi87/KI)
