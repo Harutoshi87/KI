@@ -1,11 +1,5 @@
 ![header](https://capsule-render.vercel.app/api?type=waving&color=gradient&height=180&section=header&text=AI%20모델링%20및%20LLM%20학습일지&fontSize=50)
 
-<div align="center">  
-
-**매일 1commit으로 성장하는 중** 🚀
-
-</div>
-
 ## 📌 About This Repository
 
 본 저장소는 AI 모델링 및 LLM 학습 과정을  **체계적인 이론 정리와 재현 가능한 실습 코드 중심으로 관리**합니다.
