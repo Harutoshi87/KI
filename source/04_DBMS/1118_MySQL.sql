@@ -173,7 +173,7 @@ select pno, pname, ifnull(manager, 'ceo') manager from personal;
 -- 8-2. 사번, 이름, 상사이름, 부서명(상사가 없는 사람도 출력) – 같이 합시다
 select w.pno, w.pname, ifnull(m.pname, '★CEO★') manager, dname
 	from division d, personal w  left outer join personal m
-    on w.manager = m.pno
+		on w.manager = m.pno
     where d.dno = w.dno;
 
 select w.pno, w.pname, ifnull(m.pname, '★CEO★') manager, dname
@@ -211,6 +211,9 @@ select concat(pname, '은', job) from personal;
 select sysdate(); -- mysql는 select절 가능
 -- date_format(날짜형, 포맷) : 날짜형을 문자로
 -- date_format(문자형, 포맷)  : 문자형을 날짜형으로
-	-- %Y(년도 4자리) %y(년도 2자리), %m(월 01, 02), %c(월 1, 2), %M(월 January), %b(월 Jan), %d(일 01, 02), %e(일 1, 2), %W(요일 Sunday), %a(요일 Sun)
+	-- %Y(년도 4자리) %y(년도 2자리)
+    -- %m(월 01, 02), %c(월 1, 2), %M(월 January), %b(월 Jan)
+    -- %d(일 01, 02), %e(일 1, 2)
+    -- %W(요일 Sunday), %a(요일 Sun)
     -- %h(12시) %H(24시) %i(분) %s(초) %p(AM/PM)
 select date_format(sysdate(), '%y년 %m월 %d일 %p %h:%i:%s') 지금;
