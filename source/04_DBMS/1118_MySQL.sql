@@ -211,6 +211,6 @@ select concat(pname, '은', job) from personal;
 select sysdate(); -- mysql는 select절 가능
 -- date_format(날짜형, 포맷) : 날짜형을 문자로
 -- date_format(문자형, 포맷)  : 문자형을 날짜형으로
-	-- %Y(년도 4자리) %y(년도 2자리), %m(월) %d(일 01, 02,.), %c(일1,2)
-    -- %h(12시) %H(24시) %i(분) %s(초) %p(오전)
+	-- %Y(년도 4자리) %y(년도 2자리), %m(월 01, 02), %c(월 1, 2), %M(월 January), %b(월 Jan), %d(일 01, 02), %e(일 1, 2), %W(요일 Sunday), %a(요일 Sun)
+    -- %h(12시) %H(24시) %i(분) %s(초) %p(AM/PM)
 select date_format(sysdate(), '%y년 %m월 %d일 %p %h:%i:%s') 지금;
