@@ -24,7 +24,7 @@ create table testtbl5
         
 -- 이제는 update구문을 대해서 알아보도록 하자
 -- update...set..where형태로 쓴다.
--- 만약 where(조건절)가 없다면, 모든 데이터를 수정해버린다. 현업에서도 상당한 실수가 잦다.
+-- 만약 where(조건절)가 없다면, 모든 데이터를 수정해버린다. 현업에서도 상당히 실수가 잦다.
 -- 주의를 기울이자.
 select *
   from testtbl4
@@ -37,7 +37,7 @@ update testtbl4
  where fname = 'Kyoichi';
 
 -- 간혹 가다가 전체를 대상으로 update치는 경우도 있다.
--- 제품 단가가 올라다던지, 아니면 월급이 5%인상이 되었다던지 등등
+-- 제품 단가가 올랐다든지, 아니면 월급이 5% 인상이 되었다든지 등등
 -- where절이 필요가 없다.
 select *
   from buytbl;

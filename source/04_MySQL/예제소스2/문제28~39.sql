@@ -39,12 +39,12 @@ where deptno = 20;
 
 update emp_copy
    set sal = sal + 100
-where deptno = ( select deptno from dept where loc = '인천');
+where deptno in ( select deptno from dept where loc = '인천');
 
 -- 문제32
 -- emp_copy테이블에서 경리부에 소속된 사원들만 삭제하는 SQL문을 작성하시오.(서브쿼리 dept이용)
 delete from emp_copy
- where deptno = (select deptno from dept where dname = '경리부'); 
+ where deptno in (select deptno from dept where dname = '경리부'); 
 select *
   from emp_copy;
 
@@ -53,7 +53,7 @@ select *
 -- SQL문을 완성하시오.
 select *
   from emp
- where job = ( select job from emp where ename = '이문세');
+ where job in ( select job from emp where ename = '이문세');
 
 -- 문제34
 -- 서브쿼리를 이용하여 ‘이문세’의 급여와 동일하거나 더 많이 받는 사원명과 급여를 
@@ -66,9 +66,9 @@ select *
 -- 서브쿼리를 이용하여 ‘인천’에서 근무하는 사원의 이름, 부서 번호를 출력하는 SQL문을 작성하시오.
 select ename, deptno
   from emp
- where deptno = (select deptno from dept where loc = '인천' );
+ where deptno in (select deptno from dept where loc = '인천' );
 
--- 다중행 서브쿼리
+-- 다중행 서브쿼리 (=이 아니고 무조건 in 사용)
 -- 문제36
 -- 급여가 500을 초과하는 사원과 같은 부서에 근무하는 사원의 이름, 월급, 부서번호를 출력하시오
 -- (서브쿼리에 중복된 값이 나올 수 있으니 distinct 를 이용하자)

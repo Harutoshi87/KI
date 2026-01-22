@@ -15,11 +15,11 @@ select rank() over(order by height desc) as '키 순위', username, addr, height
   from usertbl;
 
 -- dense_rank() over() 
--- 같은 키가 존재하면 동일한 등수로 만들고 동일한 등수의 수만큼 띄우고 않고 순위를 정하기
+-- 같은 키가 존재하면 동일한 등수로 만들고 동일한 등수의 수만큼 띄우지 않고 순위를 정하기
 select dense_rank() over(order by height desc) as '키 순위', username, addr, height
   from usertbl;
   
--- over(partition by 컬럼명), 컬럼명에 따라서 그룹지어서 그룹안에서 순위를 정하기
+-- over(partition by 컬럼명), 컬럼명에 따라서 그룹 지어서 그룹 안에서 순위를 정하기
 select addr, username, height,
        row_number() over(partition by addr order by height desc) as '지역별 키순위'
   from usertbl;
@@ -43,7 +43,7 @@ select username, addr, height as '키',
   from usertbl;
   
 select username, addr, height as '키',
-       height - (lag(height, 1, 0) over(order by height desc)) as '다음 사람과 키 차이'
+       height - (lag(height, 1, 0) over(order by height desc)) as '이전 사람과 키 차이'
   from usertbl;
   
 -- 지역별 최대키와 차이
@@ -56,6 +56,8 @@ select addr, username, height as '키',
 
 -- last_value()사용할 때는 반드시 over절에 
 -- rows between unbounded preceding and unbounded following : 정렬 결과의 처음과 끝을 대상으로 함.
+-- “윈도우 함수가 계산할 범위를 ‘전체 파티션’으로 명시하기 위해” 필요
+-- 현재 행 기준이 아니라, 그룹 전체를 범위로 계산하라는 뜻
 select addr, username, height as '키',
 	   height - (last_value(height) over(partition by addr order by height desc 
                  rows between unbounded preceding and unbounded following ))
@@ -95,6 +97,7 @@ select uname,
 group by uname;
 
 -- 피벗 테이블을 만드는 두 번째 방법(sum(), if())
+-- IF(조건식, 참일 때 값, 거짓일 때 값)
 select uname,
        -- 만약에 season이 봄이면 amount을 sum을 해라.
        sum(if(season='봄', amount, 0)) as '봄',
