@@ -1,7 +1,7 @@
 use sqldb;
 
 -- 대용량 데이터 삽입해보기
--- 필드의 데이터타입입 longtext이다.
+-- 필드의 데이터타입이 longtext이다.
 -- longtext는 4gb만큼 text데이터를 넣을 수 있는 것을 이미 배웠다.
 drop table if exists maxtbl;
 create table maxtbl(
@@ -18,7 +18,7 @@ select *
 select length(col1), length(col2)  -- col1은 0.95MB, col2는 0.28MB 정도가 들어가 있다.
   from maxtbl;
   
--- 분명히 longtext는 4gb저장할 수 있다고 했는 1000만바이트(9.5MB) 저장이 안된다고
+-- 분명히 longtext는 4gb저장할 수 있다고 했는데 1000만 바이트(9.5MB) 저장이 안된다고
 -- 에러가 났다.이 때는 mysql에 대한 설정을 좀 바꿔줘야 한다.
 -- C:\ProgramData\MySQL\MySQL Server 8.0\my.ini파일에 max_allow_packet부분이 기본적으로 
 -- 4MB로 설정되어 있는 걸 확인할수 있다. 이것을 4096MB로 바꿔주면 된다.
@@ -39,6 +39,17 @@ select *
   fields terminated by ',' optionally enclosed by '"'
   escaped by '\\'
   lines terminated by '\n';
+  -- FIELDS TERMINATED BY → 컬럼 구분자
+  -- OPTIONALLY ENCLOSED BY → 문자열 보호용 따옴표
+  -- ESCAPED BY → 특수문자 탈출
+  -- LINES TERMINATED BY → 행 끝 표시
+  -- id,name,addr,height\n
+  -- kim,"서울,강남",180\n
+  -- park,"부산 \"해운대\"",175\n
+  -- , → 컬럼 구분
+  -- " → 문자열 감쌈
+  -- \" → 따옴표 자체
+  -- \n → 행 종료
   
 -- 테이블의 내용을 csv 파일로 내보내기
 select *
@@ -50,7 +61,7 @@ select *
   
 -- 외부의 데이터를 가져와보자. 먼저 테이블 생성하도록 하자.
 drop table if exists membertbl;
--- like를 활용하면 테이블의 구조뿐만 아니라 제약조건까지 다 복사해온다.
+-- ★like를 활용하면 테이블의 구조뿐만 아니라 제약조건까지 다 복사해온다.★
 create table membertbl like usertbl;
 
 desc membertbl;
@@ -63,7 +74,7 @@ load data infile 'C:\\SQL\\Movies\\usertbl_copy.txt'
 fields terminated by ','
 enclosed by '"'
 lines terminated by '\n';
--- ignore 1 rows; -- 제목줄이 있을때 1행을 무시하고 테이블에 행을 저장해라.
+-- ignore 1 rows; -- ★제목줄이 있을 때 1행을 무시하고 테이블에 행을 저장해라.★
 
 truncate membertbl;
 
@@ -89,7 +100,7 @@ select *
   from employees_test;
 
 -- 위에서 파일을 내보내고, 테이블로 읽어들이기 등 정말 중요하다.(현업 사용 多)
--- 명령어를 반드시 기억을 했으면 좋다.
+-- 명령어를 잘 이해하고 사용할 것.
 
 drop database moviedb;
 create database moviedb;
@@ -110,7 +121,7 @@ desc movietbl;
 
 
 -- 쿼리를 날린 후에, Lost Connection to Mysql Server during query에러가 뜰 때가 있다.
--- 이 에러를 해결하기 위해서는 Edit->SQL Editor -> DBMS connection read time out의 값에
+-- 이 에러를 해결하기 위해서는 Edit-> Preferences -> SQL Editor -> DBMS connection read time out의 값에
 -- 3,600초(1시간)를 설정을 해주면 에러가 해결될 것이다.
 
 -- 텍스트 파일, 동영상을 테이블 저장
