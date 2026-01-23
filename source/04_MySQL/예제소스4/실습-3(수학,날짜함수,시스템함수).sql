@@ -85,7 +85,3 @@ select row_count();
 -- sleep()는 주어진 인자값만큼 멈추어준다.
 select sleep(5);
 select '5초후에 이게 보입니다';
-
-
-
-

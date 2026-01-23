@@ -40,7 +40,7 @@ select @var4, username
   from usertbl
  where height > 180;
 
--- 하지만, 변수는 limit절에는 못쓴다.
+-- 하지만, 변수는 limit절에는 못쓴다.(아래의 동적 쿼리문 참조)
 select @var4, username
   from usertbl
  where height > 180;
@@ -78,7 +78,7 @@ select num, concat(cast(price as char(10)), '*', cast(amount as char(4)), '=') a
   from buytbl;
 
 -- cast, convert함수를 쓰면 이것은 명시적 형변환에 속한다.
--- 아래 코드는 묵시적, 암시적, 자동형변환이라고 한다. 용어를 혼돈하지 말자.
+-- 아래 코드는 묵시적, 암시적, 자동형 변환이라고 한다. 용어를 혼돈하지 말자.
 select 100 + '100';
 -- select 100 + cast('100' as signed int);
 -- concat()함수는 인자값으로 숫자가 들어있어도 문자로 묵시적 형변환이 일어난다.

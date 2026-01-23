@@ -64,7 +64,7 @@ select subdate('20171005', interval 1 month);
 
 -- 문제76
 -- 자신의 태어난 날부터 현재까지 살아온 일수를 출력하시오
-select datediff(curdate(), '19801125');
+select datediff(curdate(), '19871119');
 
 -- 문제77
 -- 오늘 날짜를 출력하고 1년 중에 몇일 째인지를 출력하시오
